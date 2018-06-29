@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .jumbotron {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/user/dashboard">My Trunkpool Assignment</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/user/dashboard">Home</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href=""><%= userData.name %> (<%= userData.email %>)<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> LogOut</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="list-group">
+    <!-- loop over blog posts and render them -->
+    <h2>Book Details</h2>
+
+    <div class="w3-card-4">
+        <header class="w3-container w3-grey">
+            <h1><strong>Title : </strong> <%= bookData.volumeInfo.title %></h1>
+        </header>
+
+        <div class="w3-container">
+            <p><%= bookData.volumeInfo.description %></p>
+        </div>
+
+        <footer class="w3-container w3-grey">
+            <h5><strong>Publisher : </strong><%= bookData.volumeInfo.publisher %></h5>
+        </footer>
+    </div>
+
+</div>
+
+</body>
+
+</html>

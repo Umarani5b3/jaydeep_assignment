@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Favorite list</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/user/dashboard">My Trunkpool Assignment</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/user/favorite-books">My Favorite Books</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href=""><%= userData.name %> (<%= userData.email %>)<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> LogOut</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="list-group">
+    <!-- loop over blog posts and render them -->
+    <div class="row">
+        <div class="col-md-6"><h2>My Favorite Books</h2></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-2"></div>
+    </div>
+
+
+    <div>
+        <table class="table" id="favorite_books_container">
+            <thead>
+            <tr>
+                <th class="col-md-10">Book Title</th>
+                <th class="col-md-2">UnFavorite</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% favoriteBooks.forEach((book) => { %>
+            <tr>
+                <td><a href="/user/book-details/<%= book.id %>" class="list-group-item col-md-10"><%= book.volumeInfo.title %></a></td>
+                <td><input type="hidden" value="<%= book.id %>"><button type="button" class="btn btn-warning remove-button">UnFavorite</button></td>
+            </tr>
+            <% }) %>
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+</div>
+
+</body>
+<script>
+    $('button:button').click(function() {
+        var book_id = "";
+        $(this).closest('tr').find("input").each(function() {
+            book_id = this.value;
+        });
+//        alert(book_id);
+        $.ajax({
+            url: "http://localhost:8080/user/un-favorite-book",
+            type: 'POST',
+            data: {book_id: book_id},
+            success: function(response) {
+                if(response.status.statusCode == 204){
+                    alert(response.status.statusMessage);
+                    $(this).parent().parent().remove();
+//                    alert('worked'); // Alert does not work
+//                    whichtr.remove();
+                }
+                else
+                {
+                    alert(response.status.statusMessage);
+                }
+            },
+            error: function(err) {
+                alert(err);
+            }
+        });
+
+    });
+
+    function searchBooks(){
+        var search_keyword = $("#search_box").val();
+        if(search_keyword && search_keyword.length >=3){
+            $.ajax({
+                url: "http://localhost:8080/user/search-book-by-title",
+                type: 'POST',
+                data: {search_keyword: search_keyword},
+                success: function(response) {
+                    if(response.bookData.length){
+                        for(var i=0; i<response.bookData.length; i++){
+                            $("#books_container > tbody").html("");
+                            $("#books_container > tbody").append('<tr><td><a href="/user/book-details/'+response.bookData[i].id+'"'+' class="list-group-item col-md-10">' +response.bookData[i].volumeInfo.title+ ' </a></td><td><input type="hidden" value="'+response.bookData[i].id+'"><input type="button" class="favorite" value="'+response.bookData[i].id+'"></td></tr>');
+                        }
+                    }
+                    else
+                    {
+                        $("#books_container > tbody").html("");
+                        $("#books_container > tbody").append('<tr><td colspan="2">no record found</td></tr>');
+                    }
+
+                },
+                error: function(err) {
+                    alert(err);
+                }
+            });
+        }
+        else
+        {
+            alert("Please input at least 3 character")
+        }
+
+    }
+</script>
+
+</html>
