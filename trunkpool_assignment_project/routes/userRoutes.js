@@ -68,9 +68,12 @@ router.get('/favorite-books', function(req, res){
     if(userData.id && userData.token){
       Favorite.findOne({user_id:userData._id}, function(err, dataObj){
         if(err) res.render('error',{messageObj:statusMessage.internalServerError });
-        if(dataObj && dataObj.id){
+        if(dataObj && dataObj.id && dataObj.books.length){
           console.log(dataObj.books[0]);
           res.render('favorites', { favoriteBooks: dataObj.books, title:"Favorites Books",userData:userData})
+        }
+        else{
+          res.render('favorites', { favoriteBooks: [], title:"Favorites Books",userData:userData})
         }
       })
     }
