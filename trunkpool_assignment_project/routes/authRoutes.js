@@ -19,6 +19,9 @@ router.get('/google/callback',
       localStorage.setItem('user_data',JSON.stringify(req.user));
       res.redirect('/user/dashboard');
     }
-    catch(err) {res.redirect('/')}
+    catch(err) {
+      localStorage.removeItem('user_data');
+      res.redirect('/')
+    }
   });
 module.exports = router;

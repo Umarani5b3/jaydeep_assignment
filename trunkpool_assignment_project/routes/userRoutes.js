@@ -1,4 +1,3 @@
-
 /**
  * Created by jaydeep on 6/27/2018.
  */
@@ -36,8 +35,6 @@ router.get('/dashboard', function(req, res){
   }
 });
 
-
-
 router.get('/book-details/:book_id', function(req, res){
   try{
     var userData = JSON.parse(localStorage.getItem('user_data'));
@@ -60,7 +57,6 @@ router.get('/book-details/:book_id', function(req, res){
     res.render('error',{messageObj:statusMessage.internalServerError });
   }
 });
-
 
 router.get('/favorite-books', function(req, res){
   try{
@@ -88,8 +84,6 @@ router.get('/favorite-books', function(req, res){
   }
 });
 
-
-// blog post
 router.post('/favorite-book', function(req, res){
   try{
     var clientData =req.body;
@@ -211,7 +205,5 @@ router.post('/search-book-by-title', function(req, res){
     res.render('error',{messageObj:statusMessage.internalServerError,err:err });
   }
 });
-
-
 
 module.exports = router;

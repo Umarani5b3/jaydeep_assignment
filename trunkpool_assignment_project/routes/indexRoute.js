@@ -27,7 +27,7 @@ router.post('/', function (req, res) {
 });
 /* LOGOIN ROUTER */
 router.get('/login', function(req, res) {
-  return res.json(statusMessage.getResponse);
+  res.redirect('/');
 });
 
 /* LOGOUT ROUTER */

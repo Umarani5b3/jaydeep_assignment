@@ -7,7 +7,7 @@ module.exports = {
   },
   internalServerError:{
     statusCode:500,
-    statusMessage:"Internal Server Error"
+    statusMessage:"Internal Server Error, Please login again"
   },
   getResponse:{
     statusCode:200,
