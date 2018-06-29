@@ -48,7 +48,7 @@
             </thead>
             <tbody>
             <% favoriteBooks.forEach((book) => { %>
-            <tr>
+            <tr class="<%= book.id %>">
                 <td><a href="/user/book-details/<%= book.id %>" class="list-group-item col-md-10"><%= book.volumeInfo.title %></a></td>
                 <td><input type="hidden" value="<%= book.id %>"><button type="button" class="btn btn-warning remove-button">UnFavorite</button></td>
             </tr>
@@ -69,6 +69,8 @@
         $(this).closest('tr').find("input").each(function() {
             book_id = this.value;
         });
+
+
 //        alert(book_id);
         $.ajax({
             url: "http://localhost:8080/user/un-favorite-book",
@@ -77,19 +79,18 @@
             success: function(response) {
                 if(response.status.statusCode == 204){
                     alert(response.status.statusMessage);
-                    $(this).parent().parent().remove();
-//                    alert('worked'); // Alert does not work
-//                    whichtr.remove();
+                    $('button:button').parent().parent('tr.'+book_id).remove();
                 }
                 else
                 {
-                    alert(response.status.statusMessage);
+                   alert(response.status.statusMessage);
                 }
             },
             error: function(err) {
                 alert(err);
             }
         });
+
 
     });
 
@@ -125,6 +126,8 @@
         }
 
     }
+
+
 </script>
 
 </html>
