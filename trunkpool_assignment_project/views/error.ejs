@@ -6,8 +6,13 @@
 </head>
 <body style="text-align: center" >
 <h3><%= messageObj.statusMessage %></h3>
-<h3><%= messageObj.statusCode %></h3>
+<!--<h3><%= messageObj.statusCode %></h3>-->
+<% if(messageObj.statusCode == 404){ %>
 <img src="http://p.w3layouts.com/demos/ohh/web/images/error-img.png" title="error">
+<%}%>
+<% if(messageObj.statusCode == 500){ %>
+<img src="https://raw.githubusercontent.com/aspnetzero/documents/master/doc/images/error-500.png" title="error">
+<%}%>
 <br>
 <br>
 <a href="/" class="btn btn-info"> Login Again</a>
